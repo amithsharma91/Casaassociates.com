@@ -14,8 +14,10 @@ export default defineConfig({
     __READDY_VERSION_ID__: JSON.stringify(process.env.VERSION_ID || ""),
     __READDY_AI_DOMAIN__: JSON.stringify(process.env.READDY_AI_DOMAIN || ""),
   },
+
   plugins: [
     react(),
+
     AutoImport({
       imports: [
         {
@@ -47,6 +49,7 @@ export default defineConfig({
             "Suspense",
           ],
         },
+
         {
           "react-router-dom": [
             "useNavigate",
@@ -59,30 +62,30 @@ export default defineConfig({
             "Outlet",
           ],
         },
+
         {
           "react-i18next": ["useTranslation", "Trans"],
         },
       ],
+
       dts: true,
     }),
   ],
+
   base,
+
   build: {
     sourcemap: false,
-    outDir: "dist",
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          vendor: ["react", "react-dom", "react-router-dom", "react-i18next", "i18next"],
-        },
-      },
-    },
+    outDir: "out",
+    chunkSizeWarningLimit: 1000,
   },
+
   resolve: {
     alias: {
       "@": resolve(__dirname, "./src"),
     },
   },
+
   server: {
     port: 3000,
     host: "0.0.0.0",
