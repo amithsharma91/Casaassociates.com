@@ -5,7 +5,7 @@ const reasons = [
     icon: 'ri-flashlight-line',
     title: 'Fast Response',
     description: 'We respond to every enquiry within 24 business hours. For urgent queries, our team is available on call and WhatsApp during business hours.',
-    stat: '&lt; 24hrs',
+    stat: '< 24hrs',
     statLabel: 'response time',
   },
   {
@@ -73,10 +73,9 @@ export default function WhyContactUs() {
 
               {/* Stat */}
               <div className="mt-auto inline-flex items-baseline gap-2 bg-neutral-100 group-hover:bg-white/10 rounded-full px-4 py-2 transition-all w-fit">
-                <span
-                  className="font-serif text-neutral-900 group-hover:text-white text-lg font-semibold transition-all"
-                  dangerouslySetInnerHTML={{ __html: r.stat }}
-                ></span>
+                <span className="font-serif text-neutral-900 group-hover:text-white text-lg font-semibold transition-all">
+                  {r.stat}
+                </span>
                 <span className="text-neutral-500 group-hover:text-neutral-400 text-xs tracking-wide transition-all">{r.statLabel}</span>
               </div>
             </div>

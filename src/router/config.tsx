@@ -1,16 +1,17 @@
 import type { RouteObject } from 'react-router-dom';
-import NotFound from '../pages/NotFound';
-import Home from '../pages/home/page';
-import AboutPage from '../pages/about/page';
-import ServicesPage from '../pages/services/page';
-import ProjectsPage from '../pages/projects/page';
-import ProjectDetailPage from '../pages/projects/[id]/page';
-import SustainabilityPage from '../pages/sustainability/page';
-import ContactPage from '../pages/contact/page';
-import ArchitectsEngineersPage from '../pages/services/architects-engineers/page';
-import BuildersDevelopersPage from '../pages/services/builders-developers/page';
-import InteriorDesigningPage from '../pages/services/interior-designing/page';
-import PrivacyPolicyPage from '../pages/privacy/page';
+
+const Home = lazy(() => import('../pages/home/page'));
+const AboutPage = lazy(() => import('../pages/about/page'));
+const ServicesPage = lazy(() => import('../pages/services/page'));
+const ProjectsPage = lazy(() => import('../pages/projects/page'));
+const ProjectDetailPage = lazy(() => import('../pages/projects/[id]/page'));
+const SustainabilityPage = lazy(() => import('../pages/sustainability/page'));
+const ContactPage = lazy(() => import('../pages/contact/page'));
+const ArchitectsEngineersPage = lazy(() => import('../pages/services/architects-engineers/page'));
+const BuildersDevelopersPage = lazy(() => import('../pages/services/builders-developers/page'));
+const InteriorDesigningPage = lazy(() => import('../pages/services/interior-designing/page'));
+const PrivacyPolicyPage = lazy(() => import('../pages/privacy/page'));
+const NotFound = lazy(() => import('../pages/NotFound'));
 
 const routes: RouteObject[] = [
   {
