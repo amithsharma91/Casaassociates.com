@@ -108,6 +108,44 @@ const featureBlocks = [
   },
 ];
 
+type ToastKind = 'success' | 'error';
+const TOAST_EVENT = 'lp-toast';
+
+function showToast(kind: ToastKind, title: string, message: string) {
+  window.dispatchEvent(new CustomEvent(TOAST_EVENT, { detail: { kind, title, message } }));
+}
+
+function Toast() {
+  const [t, setT] = useState<{ kind: ToastKind; title: string; message: string } | null>(null);
+  const [show, setShow] = useState(false);
+  const timer = useRef<number | undefined>(undefined);
+
+  useEffect(() => {
+    const onToast = (e: Event) => {
+      setT((e as CustomEvent).detail);
+      setShow(true);
+      window.clearTimeout(timer.current);
+      timer.current = window.setTimeout(() => setShow(false), 5000);
+    };
+    window.addEventListener(TOAST_EVENT, onToast);
+    return () => {
+      window.removeEventListener(TOAST_EVENT, onToast);
+      window.clearTimeout(timer.current);
+    };
+  }, []);
+
+  return (
+    <div className={`toast${t?.kind === 'error' ? ' error' : ''}${show ? ' show' : ''}`} role="status" aria-live="polite">
+      <div className="toast-icon">{t?.kind === 'error' ? '!' : '✓'}</div>
+      <div>
+        <strong>{t?.title}</strong>
+        <span className="toast-msg">{t?.message}</span>
+      </div>
+      <button type="button" className="toast-close" aria-label="Close" onClick={() => setShow(false)}>×</button>
+    </div>
+  );
+}
+
 async function handleLeadForm(e: FormEvent<HTMLFormElement>, source: string, onDone?: () => void) {
   e.preventDefault();
   const f = e.currentTarget;
@@ -137,9 +175,9 @@ async function handleLeadForm(e: FormEvent<HTMLFormElement>, source: string, onD
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     f.reset();
     onDone?.();
-    alert('Thank you! Our team will call you back within a few hours.');
+    showToast('success', 'Request received!', 'Thank you! Our team will call you back within a few hours.');
   } catch {
-    alert(`Sorry, something went wrong. Please call us or email ${EMAIL}.`);
+    showToast('error', 'Something went wrong', `Please call ${PHONE_DISPLAY} or email ${EMAIL}.`);
   } finally {
     if (btn) btn.disabled = false;
   }
@@ -210,6 +248,7 @@ export default function LandingPage() {
 
   return (
     <div className="lp">
+      <Toast />
       <div className="topbar">
         <div className="container">
           <div>{PHONE_DISPLAY} &nbsp; | &nbsp; {PHONE_ALT}</div>
