@@ -108,7 +108,7 @@ const featureBlocks = [
   },
 ];
 
-function handleLeadForm(e: FormEvent<HTMLFormElement>, source: string, onDone?: () => void) {
+async function handleLeadForm(e: FormEvent<HTMLFormElement>, source: string, onDone?: () => void) {
   e.preventDefault();
   const f = e.currentTarget;
   const data = new FormData(f);
@@ -117,20 +117,32 @@ function handleLeadForm(e: FormEvent<HTMLFormElement>, source: string, onDone?: 
   const service = String(data.get('service') ?? '');
   const message = String(data.get('message') ?? '').trim();
 
-  const subject = `New Lead Consultation Request: ${service || 'General Inquiry'} - ${name}`;
-  const body =
-    `Hello Casa Associates,\n\n` +
-    `You have received a new consultation request from the Landing Page (${source}):\n\n` +
-    `• Name: ${name}\n` +
-    `• Phone: ${phone}\n` +
-    `• Service Requested: ${service}\n` +
-    (message ? `• Project Details: ${message}\n` : '') +
-    `\nThank you,\n${name}`;
-
-  const mailtoUrl = `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  window.location.href = mailtoUrl;
-  f.reset();
-  onDone?.();
+  const btn = f.querySelector<HTMLButtonElement>('button[type="submit"]');
+  if (btn) btn.disabled = true;
+  try {
+    const res = await fetch(`https://formsubmit.co/ajax/${EMAIL}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify({
+        _subject: `New Lead Consultation Request: ${service || 'General Inquiry'} - ${name}`,
+        _template: 'table',
+        _captcha: 'false',
+        Source: `Landing Page (${source})`,
+        Name: name,
+        Phone: phone,
+        Service: service,
+        'Project Details': message || '-',
+      }),
+    });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    f.reset();
+    onDone?.();
+    alert('Thank you! Our team will call you back within a few hours.');
+  } catch {
+    alert(`Sorry, something went wrong. Please call us or email ${EMAIL}.`);
+  } finally {
+    if (btn) btn.disabled = false;
+  }
 }
 
 function ServiceOptions() {
