@@ -116,11 +116,19 @@ function handleLeadForm(e: FormEvent<HTMLFormElement>, source: string, onDone?: 
   const phone = String(data.get('phone') ?? '').trim();
   const service = String(data.get('service') ?? '');
   const message = String(data.get('message') ?? '').trim();
-  const text =
-    `Hello Casa Associates, I'm ${name} (${phone}). I'm interested in ${service}.` +
-    (message ? ` Details: ${message}` : '') +
-    ` [via ${source}]`;
-  window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`, '_blank');
+
+  const subject = `New Lead Consultation Request: ${service || 'General Inquiry'} - ${name}`;
+  const body =
+    `Hello Casa Associates,\n\n` +
+    `You have received a new consultation request from the Landing Page (${source}):\n\n` +
+    `• Name: ${name}\n` +
+    `• Phone: ${phone}\n` +
+    `• Service Requested: ${service}\n` +
+    (message ? `• Project Details: ${message}\n` : '') +
+    `\nThank you,\n${name}`;
+
+  const mailtoUrl = `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  window.location.href = mailtoUrl;
   f.reset();
   onDone?.();
 }
