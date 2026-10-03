@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.sitemaps.org/schemas/sitemap/0.9
+    http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd
+    http://www.google.com/schemas/sitemap-image/1.1
+    http://www.google.com/schemas/sitemap-image/1.1/sitemap-image.xsd">
+
+  <!-- ==================== CORE PAGES ==================== -->
+
+  <!-- Homepage -->
+  <url>
+    <loc>https://example.com/</loc>
+    <lastmod>2026-04-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- About -->
+  <url>
+    <loc>https://example.com/about</loc>
+    <lastmod>2026-04-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Contact -->
+  <url>
+    <loc>https://example.com/contact</loc>
+    <lastmod>2026-04-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Sustainability -->
+  <url>
+    <loc>https://example.com/sustainability</loc>
+    <lastmod>2026-04-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- ==================== SERVICES ==================== -->
+
+  <!-- Services Hub -->
+  <url>
+    <loc>https://example.com/services</loc>
+    <lastmod>2026-04-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Service: Architects & Engineers -->
+  <url>
+    <loc>https://example.com/services/architects-engineers</loc>
+    <lastmod>2026-04-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- Service: Builders & Developers -->
+  <url>
+    <loc>https://example.com/services/builders-developers</loc>
+    <lastmod>2026-04-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- Service: Interior Designing -->
+  <url>
+    <loc>https://example.com/services/interior-designing</loc>
+    <lastmod>2026-04-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- ==================== PROJECTS ==================== -->
+
+  <!-- Projects Hub -->
+  <url>
+    <loc>https://example.com/projects</loc>
+    <lastmod>2026-04-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Project 14: RVKS - CA Office (Commercial, Hyderabad) -->
+  <url>
+    <loc>https://example.com/projects/14</loc>
+    <lastmod>2026-04-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+    <image:image>
+      <image:loc>https://storage.readdy-site.link/project_files/ffc4f7b6-7f29-4f49-86dc-95a7e6007e80/7e413d9a-3042-4659-b9e9-5e2ae9691b9f_Photo-1_1.jpg?v=638d8dad40cefabe9fc0916bac292d00</image:loc>
+      <image:title>RVKS CA Office - Commercial Interior Design Hyderabad</image:title>
+      <image:caption>RVKS CA Office commercial interior project completed by Casa Associates in Hyderabad, Telangana</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://storage.readdy-site.link/project_files/ffc4f7b6-7f29-4f49-86dc-95a7e6007e80/9493e078-6cb8-4a81-8f43-2f2498e9afbf_Photo-1_2.jpg?v=8aa03a559cddbc53ca3f4cfdd5034ce4</image:loc>
+      <image:title>RVKS CA Office Interior - Casa Associates Hyderabad</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://storage.readdy-site.link/project_files/ffc4f7b6-7f29-4f49-86dc-95a7e6007e80/f845956d-7351-46c1-9fa6-a4bbc0e75123_Photo-1_3.jpg?v=cf9681e42e5865e82dc90c515e359ef3</image:loc>
+      <image:title>RVKS CA Office Gallery - Casa Associates</image:title>
+    </image:image>
+  </url>
+
+  <!-- Project 13: My Home Mangala (Residential, Hyderabad) -->
+  <url>
+    <loc>https://example.com/projects/13</loc>
+    <lastmod>2026-04-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+    <image:image>
+      <image:loc>https://storage.readdy-site.link/project_files/ffc4f7b6-7f29-4f49-86dc-95a7e6007e80/4697e070-722b-49dd-b700-2302c5739acd_Photo_1-1.jpg?v=c07b64f8bbf0486603051a3223fcc09d</image:loc>
+      <image:title>My Home Mangala - Residential Interior Design Hyderabad</image:title>
+      <image:caption>My Home Mangala residential interior project by Casa Associates, Hyderabad, Telangana</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://storage.readdy-site.link/project_files/ffc4f7b6-7f29-4f49-86dc-95a7e6007e80/1693eb3c-3625-4102-8d9d-35d57cdde8c5_Photo_2-1.jpg?v=082d365d911edaf0344e868e138fac45</image:loc>
+      <image:title>My Home Mangala Interior Gallery - Casa Associates</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://storage.readdy-site.link/project_files/ffc4f7b6-7f29-4f49-86dc-95a7e6007e80/63514a27-8aca-4267-aa2e-813ae921e37c_Photo_3-1.jpg?v=7684aff3049c78a2e1c3f1afdbfe7e32</image:loc>
+      <image:title>My Home Mangala Living Space - Casa Associates Hyderabad</image:title>
+    </image:image>
+  </url>
+
+  <!-- Project 12: Aparna Silver Oaks (Residential, Hyderabad) -->
+  <url>
+    <loc>https://example.com/projects/12</loc>
+    <lastmod>2026-04-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+    <image:image>
+      <image:loc>https://storage.readdy-site.link/project_files/ffc4f7b6-7f29-4f49-86dc-95a7e6007e80/6ba998be-b323-4571-b9b2-ff74e0b9a731_Google-Photos-1_1-2.jpg?v=eb2230abc1cd39da16dffdf272467a71</image:loc>
+      <image:title>Aparna Silver Oaks - Residential Interior Design Hyderabad</image:title>
+      <image:caption>Aparna Silver Oaks residential interior project completed by Casa Associates in Hyderabad</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://storage.readdy-site.link/project_files/ffc4f7b6-7f29-4f49-86dc-95a7e6007e80/5ab5b051-bdc1-4930-94a2-4f208c460152_Google-Photos-1_2-2.jpg?v=63dffb853dba64419e697b0b47152068</image:loc>
+      <image:title>Aparna Silver Oaks Interior Gallery - Casa Associates</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://storage.readdy-site.link/project_files/ffc4f7b6-7f29-4f49-86dc-95a7e6007e80/92fd095d-e37c-4968-966b-9454a98cd09b_Google-Photos-1_3-2.jpg?v=a8abb9f698928eca0b60aaa97a3f913c</image:loc>
+      <image:title>Aparna Silver Oaks Living Area - Casa Associates Hyderabad</image:title>
+    </image:image>
+  </url>
+
+  <!-- Project 11: My Home Villa (Residential, Hyderabad) -->
+  <url>
+    <loc>https://example.com/projects/11</loc>
+    <lastmod>2026-04-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+    <image:image>
+      <image:loc>https://storage.readdy-site.link/project_files/ffc4f7b6-7f29-4f49-86dc-95a7e6007e80/1ed565c2-7d9a-47e3-8951-82fd3c11acfe_Google-Photos_2.jpg?v=e234e27ad58d36a0250fd2a9c6b02ccd</image:loc>
+      <image:title>My Home Villa - Luxury Residential Interior Design Hyderabad</image:title>
+      <image:caption>My Home Villa luxury residential interior project by Casa Associates, Hyderabad, Telangana</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://storage.readdy-site.link/project_files/ffc4f7b6-7f29-4f49-86dc-95a7e6007e80/b4cbdbfa-1084-49e6-9759-59aeaf49ebc6_Google-Photos_1.jpg?v=5e6c2289371f08db879573b5fe63ae60</image:loc>
+      <image:title>My Home Villa Interior Gallery - Casa Associates</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://storage.readdy-site.link/project_files/ffc4f7b6-7f29-4f49-86dc-95a7e6007e80/284ef7e4-4857-4084-beef-8ce7ce280ffa_Google-Photos_9.jpg?v=d06923d885d97eaa6bf1ef7650d7205c</image:loc>
+      <image:title>My Home Villa Living Space - Casa Associates Hyderabad</image:title>
+    </image:image>
+  </url>
+
+  <!-- Project 10: Sri Aditya Athena (Residential, Hyderabad) -->
+  <url>
+    <loc>https://example.com/projects/10</loc>
+    <lastmod>2026-04-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+    <image:image>
+      <image:loc>https://storage.readdy-site.link/project_files/ffc4f7b6-7f29-4f49-86dc-95a7e6007e80/80d64d64-ac36-424e-b3e9-77f8b441344e_IMG_20260404_224436.jpg?v=0befc251ee7deb5f9fc06cf9968950bd</image:loc>
+      <image:title>Sri Aditya Athena - Residential Interior Design Hyderabad</image:title>
+      <image:caption>Sri Aditya Athena residential interior project in progress by Casa Associates, Hyderabad</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://storage.readdy-site.link/project_files/ffc4f7b6-7f29-4f49-86dc-95a7e6007e80/4e76b359-1062-4a33-ab7a-702890893ab1_IMG_20260404_224434.jpg?v=0e0b33645f5156385804d15c223f5612</image:loc>
+      <image:title>Sri Aditya Athena Interior Gallery - Casa Associates</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://storage.readdy-site.link/project_files/ffc4f7b6-7f29-4f49-86dc-95a7e6007e80/2256b92d-d273-4e9b-9f31-50187299ab3d_IMG_20260404_224431.jpg?v=f443c81890dca76b0c52e985f2b11d58</image:loc>
+      <image:title>Sri Aditya Athena Living Area - Casa Associates Hyderabad</image:title>
+    </image:image>
+  </url>
+
+</urlset>
