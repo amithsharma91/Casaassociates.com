@@ -11,6 +11,7 @@ const ArchitectsEngineersPage = lazy(() => import('../pages/services/architects-
 const BuildersDevelopersPage = lazy(() => import('../pages/services/builders-developers/page'));
 const InteriorDesigningPage = lazy(() => import('../pages/services/interior-designing/page'));
 const PrivacyPolicyPage = lazy(() => import('../pages/privacy/page'));
+const LandingPage = lazy(() => import('../pages/landing-page/page'));
 const NotFound = lazy(() => import('../pages/NotFound'));
 
 const routes: RouteObject[] = [
@@ -57,6 +58,10 @@ const routes: RouteObject[] = [
   {
     path: '/privacy-policy',
     element: <PrivacyPolicyPage />,
+  },
+  {
+    path: '/landing-page',
+    element: <LandingPage />,
   },
   {
     path: '*',

@@ -1,4 +1,4 @@
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, useLocation } from "react-router-dom";
 import { Suspense } from "react";
 import { AppRoutes } from "./router";
 import { I18nextProvider } from "react-i18next";
@@ -6,6 +6,18 @@ import i18n from "./i18n";
 import WhatsAppFloat from "./components/feature/WhatsAppFloat";
 import ExitIntentPopup from "./components/feature/ExitIntentPopup";
 import ScrollToTop from "./components/feature/ScrollToTop";
+
+// The landing page ships its own WhatsApp button and popup
+function GlobalFloaters() {
+  const { pathname } = useLocation();
+  if (pathname.startsWith("/landing-page")) return null;
+  return (
+    <>
+      <WhatsAppFloat />
+      <ExitIntentPopup />
+    </>
+  );
+}
 
 function App() {
   return (
@@ -29,8 +41,7 @@ function App() {
         >
           <AppRoutes />
         </Suspense>
-        <WhatsAppFloat />
-        <ExitIntentPopup />
+        <GlobalFloaters />
       </BrowserRouter>
     </I18nextProvider>
   );
