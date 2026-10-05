@@ -1006,3 +1006,51 @@
 .lp .toast strong{display:block;font-size:15px;margin-bottom:2px}
 .lp .toast span.toast-msg{font-size:14px;color:var(--muted);line-height:1.4}
 .lp .toast-close{margin-left:auto;background:none;border:0;font-size:20px;line-height:1;color:var(--muted);cursor:pointer}
+
+/* ---- Landing page revisions ---- */
+.lp .btn{border:0;font-family:inherit}
+.lp .btn-outline{border:1px solid rgba(255,255,255,.55)}
+.lp .header-call{border-radius:999px;border:2px solid var(--primary);padding:12px 30px;letter-spacing:.3px}
+.lp .header-call:hover{background:#fff;color:var(--primary)}
+.lp .btn-light{background:#fff;color:#000;border-radius:4px;box-shadow:0 6px 18px rgba(0,0,0,.25)}
+.lp .btn-light:hover{background:#f1efe9;transform:translateY(-2px)}
+.lp .btn-outline-dark{border:1px solid var(--primary);color:var(--primary)}
+.lp .btn-outline-dark:hover{background:var(--primary);color:#fff}
+
+/* Bottom CTA form */
+.lp .cta-form h3{margin-bottom:6px}
+.lp .cta-form > p{font-size:13px;margin-bottom:18px}
+.lp .cta-form .lead-form-note{color:rgba(255,255,255,.6)}
+.lp .cta-form .lead-form button{background:#fff;color:#000}
+.lp .cta-form .lead-form button:hover{background:#f1efe9}
+
+/* Floating call (left) + WhatsApp (right) */
+.lp .whatsapp{font-size:0}
+.lp .call-float{position:fixed;left:20px;bottom:20px;width:57px;height:57px;border-radius:50%;background:#000;color:#fff;display:flex;align-items:center;justify-content:center;z-index:9999;box-shadow:0 8px 25px rgba(0,0,0,.25)}
+.lp .call-float:hover{transform:translateY(-2px)}
+
+/* Thank-you page */
+.lp .thankyou{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:30px 20px;background:var(--cream)}
+.lp .thankyou-card{background:#fff;max-width:520px;width:100%;padding:50px 36px;text-align:center;border-radius:8px;box-shadow:0 20px 60px rgba(0,0,0,.12)}
+.lp .thankyou-icon{width:70px;height:70px;border-radius:50%;background:#25D366;color:#fff;font-size:34px;display:flex;align-items:center;justify-content:center;margin:0 auto 22px}
+.lp .thankyou-card h1{font-family:'Playfair Display',serif;font-size:36px;margin-bottom:12px;color:var(--primary)}
+.lp .thankyou-card p{color:var(--muted);margin-bottom:28px;line-height:1.6}
+.lp .thankyou-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+
+@media(max-width:800px){
+  .lp .header{position:sticky;top:0}
+  .lp .header-call{padding:10px 22px}
+  .lp .heading-row{flex-direction:column;align-items:flex-start;gap:20px;margin-bottom:30px}
+  .lp .heading-row .btn{width:100%}
+  .lp .liaison-box{padding:35px 22px}
+  .lp .liaison-box .btn{width:100%;text-align:center}
+}
+@media(max-width:560px){
+  .lp .whatsapp,.lp .call-float{display:none}
+  .lp .mobile-bar a{padding:18px 4px;font-size:15px}
+  .lp .mobile-bar a:first-child{background:#000;color:#fff}
+  .lp .mobile-bar a:last-child{background:#25D366;color:#fff}
+  .lp .cta .cta-info{padding:22px}
+  .lp .footer-bottom{display:none}
+  .lp .cta{padding-bottom:110px}
+}
