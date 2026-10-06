@@ -2,7 +2,8 @@ import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './landing.css';
 
-const PHONE_DISPLAY = '+91 90009 75046';
+const GTM_ID = 'GTM-T2P3PNF8';
+const PHONE_DISPLAY ='+91 90009 75046';
 const PHONE_TEL = '+919000975046';
 const EMAIL = 'contact@casaassociates.com';
 const WA_NUMBER = '919000975046';
@@ -244,6 +245,26 @@ export default function LandingPage() {
     return () => {
       document.title = prevTitle;
     };
+  }, []);
+
+  // Google Tag Manager (loaded only for the landing page; index.html is shared by the whole SPA)
+  useEffect(() => {
+    if (document.getElementById('gtm-script')) return;
+
+    const w = window as unknown as { dataLayer?: unknown[] };
+    w.dataLayer = w.dataLayer || [];
+    w.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+
+    const script = document.createElement('script');
+    script.id = 'gtm-script';
+    script.async = true;
+    script.src = `https://www.googletagmanager.com/gtm.js?id=${GTM_ID}`;
+    document.head.insertBefore(script, document.head.firstChild);
+
+    const noscript = document.createElement('noscript');
+    noscript.id = 'gtm-noscript';
+    noscript.innerHTML = `<iframe src="https://www.googletagmanager.com/ns.html?id=${GTM_ID}" height="0" width="0" style="display:none;visibility:hidden"></iframe>`;
+    document.body.insertBefore(noscript, document.body.firstChild);
   }, []);
 
   // Popup 10 seconds after landing
