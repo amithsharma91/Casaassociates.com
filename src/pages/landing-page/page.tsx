@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './landing.css';
 
 const PHONE_DISPLAY = '+91 90009 75046';
 const PHONE_TEL = '+919000975046';
-const PHONE_ALT = '040 4953 5046';
 const EMAIL = 'contact@casaassociates.com';
 const WA_NUMBER = '919000975046';
 const WA_DEFAULT = `https://wa.me/${WA_NUMBER}?text=Hello%20Casa%20Associates,%20I%20would%20like%20to%20discuss%20my%20project.`;
@@ -153,7 +153,6 @@ async function handleLeadForm(e: FormEvent<HTMLFormElement>, source: string, onD
   const name = String(data.get('name') ?? '').trim();
   const phone = String(data.get('phone') ?? '').trim();
   const service = String(data.get('service') ?? '');
-  const message = String(data.get('message') ?? '').trim();
 
   const btn = f.querySelector<HTMLButtonElement>('button[type="submit"]');
   if (btn) btn.disabled = true;
@@ -169,15 +168,13 @@ async function handleLeadForm(e: FormEvent<HTMLFormElement>, source: string, onD
         Name: name,
         Phone: phone,
         Service: service,
-        'Project Details': message || '-',
       }),
     });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     f.reset();
     onDone?.();
-    showToast('success', 'Request received!', 'Thank you! Our team will call you back within a few hours.');
   } catch {
-    showToast('error', 'Something went wrong', `Please call ${PHONE_DISPLAY} or email ${EMAIL}.`);
+    showToast('error', 'Something went wrong', `Please call us on ${PHONE_DISPLAY} or email ${EMAIL}.`);
   } finally {
     if (btn) btn.disabled = false;
   }
@@ -195,9 +192,49 @@ function ServiceOptions() {
   );
 }
 
+function LeadForm({ source, onSuccess }: { source: string; onSuccess: () => void }) {
+  const [name, setName] = useState('');
+  const [phone, setPhone] = useState('');
+  return (
+    <form className="lead-form" onSubmit={(e) => handleLeadForm(e, source, onSuccess)}>
+      <input
+        type="text"
+        name="name"
+        placeholder="Full Name"
+        required
+        value={name}
+        onChange={(e) => setName(e.target.value.replace(/[0-9]/g, ''))}
+        pattern="[^0-9]+"
+        title="Name should not contain numbers"
+      />
+      <input
+        type="tel"
+        name="phone"
+        placeholder="Phone Number"
+        required
+        inputMode="numeric"
+        maxLength={10}
+        minLength={10}
+        value={phone}
+        onChange={(e) => setPhone(e.target.value.replace(/[^0-9]/g, '').slice(0, 10))}
+        pattern="[0-9]{10}"
+        title="Enter a 10-digit mobile number"
+      />
+      <select name="service" required defaultValue=""><ServiceOptions /></select>
+      <button type="submit" className="btn btn-primary">Request Free Quote →</button>
+      <span className="lead-form-note">No spam. We respect your privacy.</span>
+    </form>
+  );
+}
+
 export default function LandingPage() {
+  const navigate = useNavigate();
+  const goThankYou = () => {
+    setPopupOpen(false);
+    navigate('/landing-page/thank-you');
+  };
+  const openPopup = () => setPopupOpen(true);
   const [popupOpen, setPopupOpen] = useState(false);
-  const popupShown = useRef(false);
   const trackRef = useRef<HTMLDivElement>(null);
   const hoverRef = useRef(false);
 
@@ -209,18 +246,10 @@ export default function LandingPage() {
     };
   }, []);
 
-  // Popup at 60% scroll
+  // Popup 10 seconds after landing
   useEffect(() => {
-    const onScroll = () => {
-      if (popupShown.current) return;
-      const scrolled = window.scrollY + window.innerHeight;
-      if (scrolled / document.documentElement.scrollHeight >= 0.6) {
-        popupShown.current = true;
-        setPopupOpen(true);
-      }
-    };
-    window.addEventListener('scroll', onScroll);
-    return () => window.removeEventListener('scroll', onScroll);
+    const id = window.setTimeout(() => setPopupOpen(true), 10000);
+    return () => window.clearTimeout(id);
   }, []);
 
   const moveTestimonial = (dir: number) => {
@@ -249,13 +278,6 @@ export default function LandingPage() {
   return (
     <div className="lp">
       <Toast />
-      <div className="topbar">
-        <div className="container">
-          <div>{PHONE_DISPLAY} &nbsp; | &nbsp; {PHONE_ALT}</div>
-          <div>{EMAIL} &nbsp; | &nbsp; Banjara Hills, Hyderabad · Mon–Sat 9 AM–7 PM</div>
-        </div>
-      </div>
-
       <header className="header">
         <div className="container header-inner">
           <a href="#home" className="logo">
@@ -269,7 +291,7 @@ export default function LandingPage() {
             <a href="#process">Process</a>
             <a href="#contact">Contact</a>
           </nav>
-          <a href="#contact" className="btn btn-primary">{PHONE_DISPLAY}</a>
+          <a href={`tel:${PHONE_TEL}`} className="btn btn-primary header-call">Call Us</a>
         </div>
       </header>
 
@@ -281,8 +303,7 @@ export default function LandingPage() {
               <h1>Your Dream Space, <span>Built Right</span> — Start to Finish in Hyderabad</h1>
               <p>One trusted team for design, approvals, construction and interiors — so your project moves forward without the stress of juggling contractors.</p>
               <div className="hero-buttons">
-                <a href="#contact" className="btn btn-primary">Get Free Quote →</a>
-                <a href={WA_DEFAULT} target="_blank" rel="noreferrer" className="btn btn-outline">WhatsApp Us</a>
+                <button type="button" className="btn btn-primary" onClick={openPopup}>Get Free Quote →</button>
               </div>
               <div className="hero-stats">
                 <div className="hero-stat"><strong>120+</strong><span>Projects Completed</span></div>
@@ -294,14 +315,7 @@ export default function LandingPage() {
             <div className="hero-form-card" id="hero-form-card">
               <h3>Get a Free Consultation</h3>
               <p>Share your details — our team will call you back within a few hours.</p>
-              <form className="lead-form" onSubmit={(e) => handleLeadForm(e, 'Hero Form')}>
-                <input type="text" name="name" placeholder="Full Name" required />
-                <input type="tel" name="phone" placeholder="Phone Number" required pattern="[0-9]{10}" />
-                <select name="service" required defaultValue=""><ServiceOptions /></select>
-                <textarea name="message" placeholder="Tell us about your project (optional)"></textarea>
-                <button type="submit" className="btn btn-primary">Request Free Quote →</button>
-                <span className="lead-form-note">No spam. We respect your privacy.</span>
-              </form>
+              <LeadForm source="Hero Form" onSuccess={goThankYou} />
             </div>
           </div>
           <div className="hero-certs">
@@ -344,7 +358,7 @@ export default function LandingPage() {
               <h2 className="title">Complete Solutions Under One Roof</h2>
               <p className="desc">End-to-end solutions for every stage of your construction and design journey in Hyderabad.</p>
             </div>
-            <a href="#contact" className="btn btn-primary">Discuss Your Project →</a>
+            <button type="button" className="btn btn-primary" onClick={openPopup}>Discover Your Project →</button>
           </div>
           <div className="services-grid">
             {services.map((s, i) => (
@@ -414,7 +428,7 @@ export default function LandingPage() {
               <h2 className="title">Simplifying Building Approvals</h2>
               <p>End-to-end building approval support and coordination with GHMC, HMDA and government authorities.</p>
               <br />
-              <a href="#contact" className="btn btn-primary">Discuss Approval Requirements →</a>
+              <button type="button" className="btn btn-light" onClick={openPopup}>Discuss Approval Requirements →</button>
             </div>
             <div className="liaison-points">
               <div className="liaison-point"><strong>GHMC Coordination</strong><span>Support with applicable municipal processes.</span></div>
@@ -451,7 +465,7 @@ export default function LandingPage() {
               <h2 className="title">Projects Across Hyderabad</h2>
               <p className="desc">Delivering modern residential and commercial spaces across Hyderabad with precision and craftsmanship.</p>
             </div>
-            <a href="#contact" className="btn btn-primary">Start Your Project →</a>
+            <button type="button" className="btn btn-primary" onClick={openPopup}>Start Your Project →</button>
           </div>
           <div className="projects-grid">
             {projects.map((p) => (
@@ -515,7 +529,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <section className="section cta">
+      <section className="section cta" id="contact">
         <div className="container cta-grid">
           <div>
             <span className="label">Start Your Project</span>
@@ -523,129 +537,31 @@ export default function LandingPage() {
             <p>Get a quick response on WhatsApp. Tell us your service, location and budget — our architects will take it from there.</p>
             <div className="cta-buttons">
               <a href={WA_QUOTE} target="_blank" rel="noreferrer" className="btn btn-primary">Get Instant Quote on WhatsApp</a>
-              <a href={`tel:${PHONE_TEL}`} className="btn btn-outline">Call {PHONE_DISPLAY}</a>
+              <a href={`tel:${PHONE_TEL}`} className="btn btn-outline">Call Us</a>
             </div>
           </div>
-          <div className="cta-info">
-            <h3>Quick Contact</h3>
-            <div className="cta-row"><b>☎</b><span>{PHONE_DISPLAY}</span></div>
-            <div className="cta-row"><b>☎</b><span>{PHONE_ALT}</span></div>
-            <div className="cta-row"><b>@</b><span>{EMAIL}</span></div>
-            <div className="cta-row"><b>◷</b><span>Mon – Sat · 9:00 AM – 7:00 PM</span></div>
+          <div className="cta-info cta-form">
+            <h3>Get a Free Consultation</h3>
+            <p>Share your details — our team will call you back within a few hours.</p>
+            <LeadForm source="Bottom Form" onSuccess={goThankYou} />
           </div>
         </div>
       </section>
 
-      <section className="section contact" id="contact">
-        <div className="container contact-grid">
-          <div className="contact-card">
-            <span className="label">Contact Casa Associates</span>
-            <h2 className="title">Let's Discuss Your Project</h2>
-
-            <div className="contact-item">
-              <b>⌖</b>
-              <div>
-                <strong>Office Address</strong>
-                <span>
-                  4th Floor, Bhooma Plaza<br />
-                  Road No. 01, Avenue 07, Street 04<br />
-                  Near GVK One Mall, Banjara Hills<br />
-                  Hyderabad, Telangana 500034
-                </span>
-              </div>
-            </div>
-            <div className="contact-item">
-              <b>☎</b>
-              <div>
-                <strong>Phone</strong>
-                <span>{PHONE_DISPLAY}<br />{PHONE_ALT}</span>
-              </div>
-            </div>
-            <div className="contact-item">
-              <b>@</b>
-              <div>
-                <strong>Email</strong>
-                <span>{EMAIL}</span>
-              </div>
-            </div>
-            <div className="contact-item">
-              <b>◷</b>
-              <div>
-                <strong>Working Hours</strong>
-                <span>Mon – Sat · 9:00 AM – 7:00 PM</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="map">
-            <iframe
-              title="Casa Associates location"
-              src="https://www.google.com/maps?q=Casa%20Associates%20Hyderabad&output=embed"
-              width="100%"
-              height="100%"
-              style={{ border: 0 }}
-              allowFullScreen
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            />
-          </div>
-        </div>
-      </section>
-
-      <footer className="footer">
-        <div className="container">
-          <div className="footer-grid">
-            <div>
-              <div className="footer-logo">
-                <a href="#home" aria-label="Casa Associates">
-                  <img src={LOGO} alt="Casa Associates" className="footer-logo-image" />
-                </a>
-              </div>
-              <p className="footer-about">
-                Hyderabad-based architecture, construction and interior solutions company providing complete project support from planning and approvals to design and execution.
-              </p>
-            </div>
-            <div>
-              <h4>Company</h4>
-              <ul>
-                <li><a href="#about">About Us</a></li>
-                <li><a href="#services">Services</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#why">Why Choose Us</a></li>
-              </ul>
-            </div>
-            <div>
-              <h4>Services</h4>
-              <ul>
-                <li><a href="#services">Architects &amp; Engineers</a></li>
-                <li><a href="#services">Builders &amp; Developers</a></li>
-                <li><a href="#services">Liaisoning Works</a></li>
-                <li><a href="#services">Interior Designing</a></li>
-              </ul>
-            </div>
-            <div>
-              <h4>Contact</h4>
-              <ul>
-                <li><a href={`tel:${PHONE_TEL}`}>{PHONE_DISPLAY}</a></li>
-                <li><a href={`mailto:${EMAIL}`}>{EMAIL}</a></li>
-                <li>Banjara Hills, Hyderabad</li>
-                <li>Mon – Sat · 9 AM – 7 PM</li>
-              </ul>
-            </div>
-          </div>
-          <div className="footer-bottom">
-            <span>© 2026 Casa Associates. All Rights Reserved.</span>
-            <span>Hyderabad, India</span>
-          </div>
-        </div>
-      </footer>
-
-      <a className="whatsapp" href={WA_DEFAULT} target="_blank" rel="noreferrer" aria-label="WhatsApp">☎</a>
+      <a className="whatsapp" href={WA_DEFAULT} target="_blank" rel="noreferrer" aria-label="Chat on WhatsApp">
+        <svg viewBox="0 0 32 32" width="30" height="30" fill="currentColor" aria-hidden="true">
+          <path d="M16.04 3C9.4 3 4 8.4 4 15.04c0 2.12.55 4.19 1.6 6.01L4 29l8.1-1.57a12.03 12.03 0 0 0 3.94.66C22.68 28.09 28 22.69 28 16.05 28 9.4 22.68 3 16.04 3zm0 22.04c-1.25 0-2.47-.34-3.54-.97l-.25-.15-4.8.93.96-4.68-.17-.27a9.95 9.95 0 0 1-1.52-5.3c0-5.5 4.48-9.98 9.99-9.98s9.97 4.48 9.97 9.98-4.47 10.44-9.97 10.44zm5.47-7.46c-.3-.15-1.77-.87-2.04-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.27-.47-2.42-1.49-.89-.8-1.5-1.78-1.67-2.08-.17-.3-.02-.46.13-.61.14-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.22 3.08c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.7.63.71.23 1.36.2 1.87.12.57-.09 1.77-.72 2.02-1.42.25-.7.25-1.29.17-1.42-.07-.12-.27-.2-.57-.35z"/>
+        </svg>
+      </a>
+      <a className="call-float" href={`tel:${PHONE_TEL}`} aria-label="Call us">
+        <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor" aria-hidden="true">
+          <path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.02-.24c1.12.37 2.33.57 3.57.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.61 21 3 13.39 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1.02l-2.2 2.2z"/>
+        </svg>
+      </a>
 
       <div className="mobile-bar">
-        <a href={`tel:${PHONE_TEL}`}>Call</a>
-        <a href={`mailto:${EMAIL}`}>Email</a>
-        <a href={`https://wa.me/${WA_NUMBER}?text=Hello%20Casa%20Associates,%20I%20would%20like%20a%20free%20quote.`} target="_blank" rel="noreferrer">WhatsApp</a>
+        <a href={`tel:${PHONE_TEL}`}>Call Us</a>
+        <a href={WA_QUOTE} target="_blank" rel="noreferrer">WhatsApp</a>
       </div>
 
       <div
@@ -657,13 +573,7 @@ export default function LandingPage() {
           <span className="label">Limited Consultation Slots</span>
           <h3>Let's Plan Your Project</h3>
           <p>Get a free, no-obligation consultation with our design &amp; construction experts.</p>
-          <form className="lead-form" onSubmit={(e) => handleLeadForm(e, 'Popup Form', () => setPopupOpen(false))}>
-            <input type="text" name="name" placeholder="Full Name" required />
-            <input type="tel" name="phone" placeholder="Phone Number" required pattern="[0-9]{10}" />
-            <select name="service" required defaultValue=""><ServiceOptions /></select>
-            <button type="submit" className="btn btn-primary">Request Free Quote →</button>
-            <span className="lead-form-note">No spam. We respect your privacy.</span>
-          </form>
+          <LeadForm source="Popup Form" onSuccess={goThankYou} />
         </div>
       </div>
     </div>
